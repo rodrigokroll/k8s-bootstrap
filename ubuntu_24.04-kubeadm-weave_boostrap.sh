@@ -102,3 +102,5 @@ echo "[INFO] Visualize control-plane node..."
 kubectl get nodes -o wide
 
 echo "[SUCCESS] Kubernetes control plane is initialized and ready!"
+
+sudo apt-get install bash-completion -y
