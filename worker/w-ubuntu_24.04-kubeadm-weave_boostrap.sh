@@ -44,6 +44,25 @@ echo "deb [arch=$(dpkg --print-architecture) signed-by=$DOCKER_KEYRING_PATH] \
 https://download.docker.com/linux/ubuntu \
 $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 
+# Install containerd
+echo "Installing containerd..."
+sudo apt-get update && sudo apt-get install -y containerd.io || { echo "Failed to install containerd"; exit 1; }
+
+# Configure containerd
+echo "Configuring containerd..."
+sudo containerd config default | sudo tee "$CONTAINERD_CONFIG" > /dev/null || { echo "Failed to generate containerd config"; exit 1; }
+sudo sed -i 's/SystemdCgroup = false/SystemdCgroup = true/g' "$CONTAINERD_CONFIG" || { echo "Failed to modify containerd config"; exit 1; }
+sudo systemctl restart containerd || { echo "Failed to restart containerd"; exit 1; }
+
+# Set up K8S repository
+echo "Setting up K8S repository..."
+curl -fsSL "https://pkgs.kubernetes.io/core:/stable:/v${K8S_VERSION}/deb/Release.key" | \
+    sudo gpg --dearmor -o "$K8S_KEYRING_PATH" || { echo "Failed to install K8S GPG key"; exit 1; }
+
+echo "deb [signed-by=$K8S_KEYRING_PATH] \
+https://pkgs.kubernetes.io/core:/stable:/v${K8S_VERSION}/deb/ /" | \
+    sudo tee /etc/apt/sources.list.d/kubernetes.list || { echo "Failed to add K8S repository"; exit 1; }
+
 # Install K8S components
 echo "Installing kubernetes components..."
 sudo apt-get update || { echo "Failed to update package lists"; exit 1; }
