@@ -103,7 +103,9 @@ kubectl get nodes -o wide
 
 echo "[SUCCESS] Kubernetes control plane is initialized and ready!"
 
+echo "[INFO] Install additional tooling, docker"
 sudo apt-get install bash-completion -y
+sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 
 echo
 echo "-------- <exit and log back in> ---------- "
