@@ -108,5 +108,5 @@ sudo apt-get install bash-completion -y
 echo
 echo "-------- <exit and log back in> ---------- "
 echo "type:"
-echo "  source <(kubectl completion bash)"
-echo "  source <(kubectl completion bash) >> $HOME/.bashrc"
+echo "  $ source <(kubectl completion bash)"
+echo "  $ echo 'source <(kubectl completion bash)' >> $HOME/.bashrc"
