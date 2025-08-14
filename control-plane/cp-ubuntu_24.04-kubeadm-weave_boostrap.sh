@@ -104,3 +104,9 @@ kubectl get nodes -o wide
 echo "[SUCCESS] Kubernetes control plane is initialized and ready!"
 
 sudo apt-get install bash-completion -y
+
+echo
+echo "-------- <exit and log back in> ---------- "
+echo "type:"
+echo "  source <(kubectl completion bash)"
+echo "  source <(kubectl completion bash) >> $HOME/.bashrc"
