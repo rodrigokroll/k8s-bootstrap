@@ -11,7 +11,7 @@ HOSTNAME=`hostname`
 POD_CIDR="10.0.0.0/16"
 CONTROL_PLANE_NODE_NAME="cp"
 
-# Become root and update
+# Update packages
 sudo apt-get update && sudo apt-get upgrade -y
 sudo apt install apt-transport-https software-properties-common lsb-release ca-certificates socat -y
 
